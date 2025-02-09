@@ -74,6 +74,22 @@ public class SortShow extends JPanel {
 			//Using the selection sort to lines_lengths sort the array
 
 			//You need to complete this part.
+			int n = lines_lengths.length;
+
+			// Using Selection Sort algorithm
+			for (int i = 0; i < n - 1; i++) {
+				int minIndex = getIndexOfSmallest(i, n - 1); // Find the smallest element in the remaining array
+
+				// Swap the found minimum element with the first element of the unsorted part
+				if (minIndex != i) {
+					int temp = lines_lengths[i];
+					lines_lengths[i] = lines_lengths[minIndex];
+					lines_lengths[minIndex] = temp;
+				}
+
+				paintComponent(this.getGraphics());
+				delay(10);
+			}
 
 			//getting the date and time when the selection sort ends
 			Calendar end = Calendar.getInstance();
@@ -86,10 +102,74 @@ public class SortShow extends JPanel {
 		public int getIndexOfSmallest(int first, int last){
 
 			//You need to complete this part.
+			int minIndex = first;
 
-			return 1; //modify this line
+			for (int i = first + 1; i <= last; i++) {
+				if (lines_lengths[i] < lines_lengths[minIndex]) {
+					minIndex = i;
+				}
+			}
+			return minIndex;
 		}
-		
+
+	public void BubbleSort() {
+		Calendar start = Calendar.getInstance();
+
+		int n = lines_lengths.length;
+
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = 0; j < n - i - 1; j++) {
+				if (lines_lengths[j] > lines_lengths[j + 1]) {
+					int temp = lines_lengths[j];
+					lines_lengths[j] = lines_lengths[j + 1];
+					lines_lengths[j + 1] = temp;
+				}
+			}
+
+			// Force repaint after each iteration for visualization
+			paintComponent(this.getGraphics());
+			delay(10);
+		}
+
+		Calendar end = Calendar.getInstance();
+		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
+
+	}
+
+
+	public void InsertionSort() {
+		// Getting the start time
+		Calendar start = Calendar.getInstance();
+
+		int n = lines_lengths.length;
+
+		for (int i = 1; i < n; i++) {
+			int key = lines_lengths[i];
+			int j = i - 1;
+
+			// Move elements of lines_lengths[0..i-1] that are greater than key
+			// one position ahead of their current position
+			while (j >= 0 && lines_lengths[j] > key) {
+				lines_lengths[j + 1] = lines_lengths[j];
+				j--;
+
+				// Force repaint after each shift for visualization
+
+			}
+
+			// Place key in its correct position
+			lines_lengths[j + 1] = key;
+			paintComponent(this.getGraphics());
+			delay(10);
+		}
+
+		// Getting the end time
+		Calendar end = Calendar.getInstance();
+		SortGUI.insertionTime = end.getTime().getTime() - start.getTime().getTime();
+
+	}
+
+
 	///////////////////////////////////////////////////////////////////////////////////
 		
 		//recursive merge sort method
@@ -291,6 +371,10 @@ public class SortShow extends JPanel {
 	        	Thread.currentThread().interrupt();
 	        }
 		}
+		
+	}
+
+
 		
 	}
 
