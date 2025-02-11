@@ -179,6 +179,7 @@ public class SortShow extends JPanel {
 			//assigning the size for the tempArray below
 
 			//You need to complete this part.
+			R_MergeSort(0, lines_lengths.length - 1);
 
 			Calendar end = Calendar.getInstance();
 			//getting the time it took for the iterative merge sort to execute
@@ -190,11 +191,15 @@ public class SortShow extends JPanel {
 		//recursive merge sort method
 		public void R_MergeSort(int first, int last){
 			if(first < last){
-
 				//You need to complete this part.
-
+				int mid = (first + last) / 2;
+				R_MergeSort(first, mid);
+				R_MergeSort(mid + 1, last);
+				R_Merge(first, mid, last);
 				//Causing a delay for 10ms
 				//delay(10);
+				paintComponent(this.getGraphics());
+				delay(10);
 			}
 		}
 
@@ -203,9 +208,43 @@ public class SortShow extends JPanel {
 		public void R_Merge(int first, int mid, int last){
 
 			//You need to complete this part.
-				
+			int leftLength = mid - first + 1;
+			int rightLength = last - mid;
+
+			int[] leftArray = new int[leftLength];
+			int[] rightArray = new int[rightLength];
+			System.arraycopy(lines_lengths, first, leftArray, 0, leftLength);
+			System.arraycopy(lines_lengths, mid + 1, rightArray, 0, rightLength);
+
+			int l = 0, r = 0, k = first;
+			while (l < leftLength && r < rightLength)
+			{
+				if (leftArray[l] <= rightArray[r])
+				{
+					lines_lengths[k] = leftArray[l];
+					l++;
+				}
+				else
+				{
+					lines_lengths[k] = rightArray[r];
+					r++;
+				}
+				k++;
+			}
+			while (l < leftLength)
+			{
+				lines_lengths[k] = leftArray[l];
+				l++;
+				k++;
+			}
+			while (r < rightLength)
+			{
+				lines_lengths[k] = rightArray[r];
+				r++;
+				k++;
+			}
 		}
-		
+
 		//
 
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -375,6 +414,4 @@ public class SortShow extends JPanel {
 	}
 
 
-		
-	}
 

@@ -283,51 +283,8 @@ public class SortGUI {
 						bubble_time_taken.setText("");
 						insertion_time_taken.setText("");
 
-					} else if (Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(true, false, false, false, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, false, false, false, true, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, false, false, true, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, false, true, false, false, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, true, false, false, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, false, true, false, true, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, true, false, false, false, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, true, false, true, false, false);
-
-					} else if (Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(true, true, true, false, false, false);
-
-					} else if (Selection_Done) {
-						Set_Available_Chooses(false, true, true, true, true, false);
-
-					} else if (Recersive_Merge_Done) {
-						Set_Available_Chooses(true, false, true, true, true, false);
-
-					} else if (Iterative_Merge_Done) {
-						Set_Available_Chooses(true, true, false, true, true, false);
-
-					} else if (Bubble_Sort_Done) {
-						Set_Available_Chooses(true, true, true, false, true, false);
-
-					} else if (Insertion_Sort_Done) {
-						Set_Available_Chooses(true, true, true, true, false, false);
-
 					} else {
-						// If no sorting algorithms have been used, enable all buttons
-						Set_Available_Chooses(true, true, true, true, true, false);
+						Set_Available_Chooses(!Selection_Done, !Recersive_Merge_Done, !Iterative_Merge_Done, !Bubble_Sort_Done, !Insertion_Sort_Done, false);
 					}
 				}
 			});
@@ -356,8 +313,5 @@ public class SortGUI {
 }
 
 
-
-
-}
 
 
