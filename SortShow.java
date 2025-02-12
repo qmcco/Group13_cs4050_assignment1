@@ -241,62 +241,38 @@ public class SortShow extends JPanel {
 
 	public void quickSortCall(){
 		Calendar start = Calendar.getInstance();
-		int beginLeftovers = total_number_of_lines;
 		int first = 0;
 		int last = total_number_of_lines - 1;
 		quickSort(lines_lengths, first, last);
-		paintComponent(this.getGraphics());
+		//paintComponent(this.getGraphics());
 		Calendar end = Calendar.getInstance();
 		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
-	}
-	private
-		void sortFirstMiddleLast (int [] a, int first, int mid, int last) {
-		order (a, first, mid);
-		order (a, mid, last);
-		order (a, first, mid);
-	}
-
-	private void order (int [] a, int i, int j) {
-		if (a[i] > a[j])
-			swap (a, i, j);
 	}
 
 	private void swap (int [] array, int i, int j) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
-		//paintComponent(this.getGraphics());
-		//delay(10);
+		paintComponent(this.getGraphics());
+		delay(10);
 	}
 
 	private
 		int partition (int [] a, int first, int last)
 	{
-		int mid = (first + last) / 2;
-		sortFirstMiddleLast (a, first, mid, last);
-		swap (a, mid,last - 1);
-		int pivotIndex = last - 1;
-		int pivot = a[pivotIndex];
-		int indexFromLeft = first + 1;
-		int indexFromRight = last - 2;
-		boolean done = false;
-		while(!done) {
-			while(a[indexFromLeft] < pivot)
-				indexFromLeft++;
-			while(a[indexFromRight] >  pivot)
-				indexFromRight--;
-			assert a[indexFromLeft] >= pivot && a[indexFromRight] <= pivot;
-			if(indexFromLeft < indexFromRight){
-				swap(a, indexFromLeft, indexFromRight);
-				indexFromLeft++;
-				indexFromRight--;
+		int pivot = a[last];
+		int currElem = first;
+		int prevElem = (first-1);
+		while(currElem < last){
+			if(a[currElem] <= pivot){
+				prevElem++;
+				swap(a, currElem, prevElem);
 			}
-			else
-				done = true;
+			currElem++;
 		}
-		swap(a, pivotIndex, indexFromLeft);
-		pivotIndex = indexFromLeft;
-		return pivotIndex;
+		swap(a, prevElem+1, last);
+		return prevElem+1;
+
 	}
 
 	public
