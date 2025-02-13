@@ -189,7 +189,7 @@ public class SortShow extends JPanel {
 
 			//You need to complete this part.
 			// Call private function
-			R_MergeSort(0, lines_lengths.length - 1);
+			R_MergeSort(0, lines_lengths.length - 1, delayTime);
 
 			Calendar end = Calendar.getInstance();
 			//getting the time it took for the iterative merge sort to execute
@@ -200,17 +200,17 @@ public class SortShow extends JPanel {
 		
 		//recursive merge sort method
 		// Recursively call this function to get all the elements into sub arrays to be sorted
-		private void R_MergeSort(int first, int last){
+		private void R_MergeSort(int first, int last, int delayTime){
 			if(first < last){
 				//You need to complete this part.
 				int mid = (first + last) / 2;
-				R_MergeSort(first, mid);
-				R_MergeSort(mid + 1, last);
+				R_MergeSort(first, mid, delayTime);
+				R_MergeSort(mid + 1, last, delayTime);
 				R_Merge(first, mid, last);
 				//Causing a delay for 10ms
 				//delay(10);
 				paintComponent(this.getGraphics());
-				delay(10);
+				delay(delayTime);
 			}
 		}
 
@@ -264,12 +264,12 @@ public class SortShow extends JPanel {
 		//
 
 	//Radix sort wrapper method
-	public void RadixSort(){
+	public void RadixSort(int delayTime){
 		//getting the date and time when the radix sort starts
 		Calendar start = Calendar.getInstance();
 
 		// Call private function
-		RadixSort(lines_lengths);
+		RadixSort(lines_lengths, delayTime);
 
 		Calendar end = Calendar.getInstance();
 		//getting the time it took for the radix sort to execute
@@ -279,15 +279,15 @@ public class SortShow extends JPanel {
 	}
 
 	// Radix Sort method
-	private void RadixSort(int[] array){
+	private void RadixSort(int[] array, int delayTime){
 		// Find the largest value in the array to later determine the number of digits to be sorted
 		int max = getMax(array);
 		// Start at the LSD and iterate by digit until reaching max digits
 		for (int i = 1; max/i > 0; i *= 10) {
 			BucketSort(array, i);
 
-			//Causing a delay for 10ms
-			delay(10);
+			//Causing a delay for int delayTime value
+			delay(delayTime);
 			paintComponent(this.getGraphics());
 
 		}
