@@ -239,6 +239,40 @@ public class SortShow extends JPanel {
 
 	//////////////////////////////////////////////////////////////////////
 
+	public void shellSortCall(){
+		Calendar start = Calendar.getInstance();
+		int first = 0;
+		int last = total_number_of_lines - 1;
+		shellSort(lines_lengths, first, last);
+		Calendar end = Calendar.getInstance();
+		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
+
+	}
+
+	private void incrementalInsSort (int [] array, int first, int last, int space){
+		int unsorted, index;
+		for (unsorted = first + space; unsorted <= last; unsorted = unsorted + space){
+			int firstUnsorted = array[unsorted];
+			for (index = unsorted - space; (index >= first) && (firstUnsorted < array[index]); index = index - space){
+				array[index + space] = array[index];
+				paintComponent(this.getGraphics());
+				delay(10);
+			}
+			array[index + space] = firstUnsorted;
+		}
+	}
+
+	public void shellSort (int [] array, int first, int last){
+		int n = last - first + 1;
+		for (int space = n/2; space > 0; space = space/2){
+			for (int begin = first; begin < first + space; begin++){
+				incrementalInsSort(array, begin, last, space);
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////
+
 	public void quickSortCall(){
 		Calendar start = Calendar.getInstance();
 		int first = 0;

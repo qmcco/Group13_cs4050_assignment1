@@ -21,6 +21,7 @@ public class SortGUI {
 	public static double rmergeTime = 0.0;
 	//a variable that holds the amount of time for the iterative merge sort takes to execute
 	public static double imergeTime = 0.0;
+	public static double shellsortTime = 0.0;
 	public static double qsortTime = 0.0;
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
@@ -28,6 +29,7 @@ public class SortGUI {
 	public boolean Recersive_Merge_Done = false;
 	//Boolean variable that is made to keep track whether or not the iterative merge sort has already been used
 	public boolean Iterative_Merge_Done = false;
+	public boolean Shell_Sort_Done = false;
 	public boolean Quick_Sort_Done = false;
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
@@ -58,6 +60,7 @@ public class SortGUI {
 		JRadioButton rmerge = new JRadioButton("Merge Recursive");
 		//making a iterative merge button with a text "Selection" on it
 		JRadioButton imerge = new JRadioButton("Merge Iterative");
+		JRadioButton shellsort = new JRadioButton("Shell Sort");
 		JRadioButton qsort = new JRadioButton("Quick Sort");
 		//making a reset button with a text "Selection" on it
 		JRadioButton reset = new JRadioButton("Reset");
@@ -72,6 +75,9 @@ public class SortGUI {
 		//A label that displays the time it took for the iterative merge sort took to execute
 		JLabel imerge_time_label = new JLabel("Merge-Ita Time");
 		JLabel imerge_time_taken = new JLabel("");
+
+		JLabel shellsort_time_label = new JLabel("Shell Sort-Time");
+		JLabel shellsort_time_taken = new JLabel("");
 
 		JLabel qsort_time_label = new JLabel("Quick-Sort Time");
 		JLabel qsort_time_taken = new JLabel("");
@@ -92,6 +98,7 @@ public class SortGUI {
 			rmerge.setForeground(Color.BLUE);
 			//The iterative merge button text will be the colour blue
 			imerge.setForeground(Color.BLUE);
+			shellsort.setForeground(Color.BLUE);
 			qsort.setForeground(Color.BLUE);
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
@@ -106,6 +113,7 @@ public class SortGUI {
 			radio_button_selection_Panel.add(rmerge);
 			//Adding the iterative merge button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(imerge);
+			radio_button_selection_Panel.add(shellsort);
 			radio_button_selection_Panel.add(qsort);
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
@@ -128,6 +136,8 @@ public class SortGUI {
 			time_Panel.add(imerge_time_label);
 			//Adding the imerge_time_taken to the time_Panel
 			time_Panel.add(imerge_time_taken);
+			time_Panel.add(shellsort_time_label);
+			time_Panel.add(shellsort_time_taken);
 			time_Panel.add(qsort_time_label);
 			time_Panel.add(qsort_time_taken);
 
@@ -206,6 +216,15 @@ public class SortGUI {
 				}
 			});
 
+			shellsort.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					sortArea.shellSortCall();
+					shellsort_time_taken.setText((shellsortTime / 1000) + " Seconds");
+					Shell_Sort_Done = true;
+					Set_Available_Chooses(false, false, false, false,true);
+				}
+			});
+
 			qsort.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					sortArea.quickSortCall();
@@ -231,6 +250,7 @@ public class SortGUI {
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
 						Iterative_Merge_Done = false;
+						Shell_Sort_Done = false;
 						Quick_Sort_Done = false;
 						Selection_Done = false;
 						Set_Available_Chooses(false, false, false, false, false);
