@@ -7,8 +7,11 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.List;
+
 
 //The class that has all the sorts in it
 public class SortShow extends JPanel { 
@@ -179,6 +182,7 @@ public class SortShow extends JPanel {
 			//assigning the size for the tempArray below
 
 			//You need to complete this part.
+			// Call private function
 			R_MergeSort(0, lines_lengths.length - 1);
 
 			Calendar end = Calendar.getInstance();
@@ -189,7 +193,8 @@ public class SortShow extends JPanel {
 		}
 		
 		//recursive merge sort method
-		public void R_MergeSort(int first, int last){
+		// Recursively call this function to get all the elements into sub arrays to be sorted
+		private void R_MergeSort(int first, int last){
 			if(first < last){
 				//You need to complete this part.
 				int mid = (first + last) / 2;
@@ -205,17 +210,20 @@ public class SortShow extends JPanel {
 
 		
 		//recursive merge sort method
-		public void R_Merge(int first, int mid, int last){
+		private void R_Merge(int first, int mid, int last){
 
 			//You need to complete this part.
+			// Gets the size of each side
 			int leftLength = mid - first + 1;
 			int rightLength = last - mid;
-
+			// Makes temporary arrays with the sizes above to help with sorting
 			int[] leftArray = new int[leftLength];
 			int[] rightArray = new int[rightLength];
+			// Copies data from passed array into the temp arrays
 			System.arraycopy(lines_lengths, first, leftArray, 0, leftLength);
 			System.arraycopy(lines_lengths, mid + 1, rightArray, 0, rightLength);
 
+			// Merge the left and right arrays with O(1) comparisons looking at the current index of each array
 			int l = 0, r = 0, k = first;
 			while (l < leftLength && r < rightLength)
 			{
@@ -231,6 +239,8 @@ public class SortShow extends JPanel {
 				}
 				k++;
 			}
+			// When one of the arrays runs out of elements that means all the other arrays elements are greater than the last element in the other array
+			// Because of that no comparison needs to happen and the remaining elements can be dumped into the array without comparison
 			while (l < leftLength)
 			{
 				lines_lengths[k] = leftArray[l];
@@ -246,6 +256,71 @@ public class SortShow extends JPanel {
 		}
 
 		//
+
+	//Radix sort wrapper method
+	public void RadixSort(){
+		//getting the date and time when the radix sort starts
+		Calendar start = Calendar.getInstance();
+
+		// Call private function
+		RadixSort(lines_lengths);
+
+		Calendar end = Calendar.getInstance();
+		//getting the time it took for the radix sort to execute
+		//subtracting the end time with the start time
+		SortGUI.radixTime = end.getTime().getTime() - start.getTime().getTime();
+
+	}
+
+	// Radix Sort method
+	private void RadixSort(int[] array){
+		// Find the largest value in the array to later determine the number of digits to be sorted
+		int max = getMax(array);
+		// Start at the LSD and iterate by digit until reaching max digits
+		for (int i = 1; max/i > 0; i *= 10) {
+			BucketSort(array, i);
+
+			//Causing a delay for 10ms
+			delay(10);
+			paintComponent(this.getGraphics());
+
+		}
+	}
+	// Helper function for getting largest value in the array
+	private int getMax(int[] array) {
+		int max = array[0];
+		for (int i: array) {
+			if (i > max) {
+				max = i;
+			}
+		}
+		return max;
+	}
+	// Bucket sort Method
+	private void BucketSort(int[] array, int digit) {
+		// Make buckets for each digit 0-9
+		ArrayList<Integer>[] buckets = new ArrayList[10];
+		// Make each bucket into an ArrayList for storing the sorted values
+		for (int i = 0; i < 10; i++) {
+			buckets[i] = new ArrayList<>();
+		}
+		// Place elements from the array into buckets based on the current digit
+		for (int num : array) {
+			int place = (num/ digit) % 10;
+			buckets[place].add(num);
+			//delay(10);
+		}
+		// Remake the passed array with the results of the current sorting
+		// Takes the numbers in order from the buckets and puts into the array
+		int index = 0;
+		for (List<Integer> bucket : buckets) {
+			for (int num : bucket) {
+				array[index++] = num;
+				//delay(10);
+			}
+		}
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 		
