@@ -25,6 +25,8 @@ public class SortGUI {
 	public static double bubbleTime = 0.0;
 	//a variable that holds the amount of time for the insertion sort takes to execute
 	public static double insertionTime = 0.0;
+	public static double shellsortTime = 0.0;
+	public static double qsortTime = 0.0;
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
 	//Boolean variable that is made to keep track whether or not the recursive merge sort has already been used
@@ -36,6 +38,8 @@ public class SortGUI {
 	//Boolean variable that is made to keep track whether or not the insertion sort has already been used
 	public boolean Insertion_Sort_Done = false;
 
+	public boolean Shell_Sort_Done = false;
+	public boolean Quick_Sort_Done = false;
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
 	
@@ -47,7 +51,7 @@ public class SortGUI {
 
 		MyScreen screen = new MyScreen();
 		//Setting a title to the GUI window
-		screen.setTitle("Assignment-1 by Abdelnasser Ouda");
+		screen.setTitle("Assignment-1 by Group13");
 		//setting the size of the window 
 		screen.setSize(975+sortArea.total_number_of_lines, 450);
 		//the operation when the frame is closed
@@ -69,6 +73,8 @@ public class SortGUI {
 		JRadioButton bubble = new JRadioButton("Bubble Sort");
 		//making a bubble sort button with a text "Insertion Sort" on it
 		JRadioButton insertion = new JRadioButton("Insertion Sort");
+		JRadioButton shellsort = new JRadioButton("Shell Sort");
+		JRadioButton qsort = new JRadioButton("Quick Sort");
 		//making a reset button with a text "Selection" on it
 		JRadioButton reset = new JRadioButton("Reset");
 		//A label that displays the time it took for the Selection sort took to execute 
@@ -86,6 +92,13 @@ public class SortGUI {
 
 		JLabel insertion_time_label = new JLabel("Insertion Time");
 		JLabel insertion_time_taken = new JLabel("");
+
+		JLabel shellsort_time_label = new JLabel("Shell Sort-Time");
+		JLabel shellsort_time_taken = new JLabel("");
+
+		JLabel qsort_time_label = new JLabel("Quick-Sort Time");
+		JLabel qsort_time_taken = new JLabel("");
+
 		//the default constructor for the class MyScreen
 		public MyScreen() {
 			// Panel where sorted lines_lengths will displayed
@@ -99,6 +112,7 @@ public class SortGUI {
 			bubble_time_taken.setForeground(Color.RED);
 			//The time displayed for insertion sort will be the colour red
 			insertion_time_taken.setForeground(Color.RED);
+			qsort_time_taken.setForeground(Color.RED);
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
 			//The recursive merge button text will be the colour blue
@@ -109,6 +123,8 @@ public class SortGUI {
 			bubble.setForeground(Color.BLUE);
 			//The insertion sort button text will be the colour blue
 			insertion.setForeground(Color.BLUE);
+			shellsort.setForeground(Color.BLUE);
+			qsort.setForeground(Color.BLUE);
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
 			//setting the font of scramble button
@@ -126,6 +142,8 @@ public class SortGUI {
 			radio_button_selection_Panel.add(bubble);
 			//Adding the insertion sort button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(insertion);
+			radio_button_selection_Panel.add(shellsort);
+			radio_button_selection_Panel.add(qsort);
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
 			//giving the radio_button_selection_Panel a border with a title 
@@ -154,6 +172,10 @@ public class SortGUI {
 			//Adding the insertion_time_taken to the time_Panel
 			time_Panel.add(insertion_time_taken);
 
+			time_Panel.add(shellsort_time_label);
+			time_Panel.add(shellsort_time_taken);
+			time_Panel.add(qsort_time_label);
+			time_Panel.add(qsort_time_taken);
 
 			//A Panel to hold the buttons_area_Panel and set the GridLayout
 			//This buttons_area_Panel will hold scrambleButton, radio_button_selection and the time_Panel
@@ -171,6 +193,7 @@ public class SortGUI {
 			add(sortArea, BorderLayout.CENTER);
 			//setting all booleans to false
 			Set_Available_Chooses(false, false, false, false, false, false);
+			Set_Available_Chooses(false, false, false, false, false);
 
 			//The following code is for creating a listener for each GUI element 
 
@@ -185,6 +208,7 @@ public class SortGUI {
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
 					Set_Available_Chooses(true, true, true, true, true,  false );
+					Set_Available_Chooses(true, true, true, true,false);
 				}
 			});
 
@@ -227,6 +251,25 @@ public class SortGUI {
 					Iterative_Merge_Done = true;
 					//setting all booleans false except for reset
 					Set_Available_Chooses(false, false, false, false, false, true);
+					Set_Available_Chooses(false, false, false, false,true);
+				}
+			});
+
+			shellsort.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					sortArea.shellSortCall();
+					shellsort_time_taken.setText((shellsortTime / 1000) + " Seconds");
+					Shell_Sort_Done = true;
+					Set_Available_Chooses(false, false, false, false,true);
+				}
+			});
+
+			qsort.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					sortArea.quickSortCall();
+					qsort_time_taken.setText((qsortTime / 1000) + " Seconds");
+					Quick_Sort_Done = true;
+					Set_Available_Chooses(false, false, false, false,true);
 				}
 			});
 
@@ -273,6 +316,8 @@ public class SortGUI {
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
 						Iterative_Merge_Done = false;
+						Shell_Sort_Done = false;
+						Quick_Sort_Done = false;
 						Selection_Done = false;
 						Bubble_Sort_Done = false;
 						Insertion_Sort_Done = false;

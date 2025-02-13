@@ -317,6 +317,89 @@ public class SortShow extends JPanel {
 			lines_lengths[index] = tempArray[index];
 	}
 
+	//////////////////////////////////////////////////////////////////////
+
+	public void shellSortCall(){
+		Calendar start = Calendar.getInstance();
+		int first = 0;
+		int last = total_number_of_lines - 1;
+		shellSort(lines_lengths, first, last);
+		Calendar end = Calendar.getInstance();
+		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
+
+	}
+
+	private void incrementalInsSort (int [] array, int first, int last, int space){
+		int unsorted, index;
+		for (unsorted = first + space; unsorted <= last; unsorted = unsorted + space){
+			int firstUnsorted = array[unsorted];
+			for (index = unsorted - space; (index >= first) && (firstUnsorted < array[index]); index = index - space){
+				array[index + space] = array[index];
+				paintComponent(this.getGraphics());
+				delay(10);
+			}
+			array[index + space] = firstUnsorted;
+		}
+	}
+
+	public void shellSort (int [] array, int first, int last){
+		int n = last - first + 1;
+		for (int space = n/2; space > 0; space = space/2){
+			for (int begin = first; begin < first + space; begin++){
+				incrementalInsSort(array, begin, last, space);
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////
+
+	public void quickSortCall(){
+		Calendar start = Calendar.getInstance();
+		int first = 0;
+		int last = total_number_of_lines - 1;
+		quickSort(lines_lengths, first, last);
+		//paintComponent(this.getGraphics());
+		Calendar end = Calendar.getInstance();
+		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	private void swap (int [] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+		paintComponent(this.getGraphics());
+		delay(10);
+	}
+
+	private
+		int partition (int [] a, int first, int last)
+	{
+		int pivot = a[last];
+		int currElem = first;
+		int prevElem = (first-1);
+		while(currElem < last){
+			if(a[currElem] <= pivot){
+				prevElem++;
+				swap(a, currElem, prevElem);
+			}
+			currElem++;
+		}
+		swap(a, prevElem+1, last);
+		return prevElem+1;
+
+	}
+
+	public
+		void quickSort(int [] a, int first, int last)
+	{
+		if(first < last)
+		{
+			int pivotIndex = partition (a, first, last);
+			quickSort(a, first, pivotIndex - 1);
+			quickSort(a, pivotIndex + 1, last);
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////	
 		
 		//This method resets the window to the scrambled lines display
