@@ -68,7 +68,7 @@ public class SortShow extends JPanel {
 		}
 		
 		//The selectionSort method
-		public void SelectionSort(){
+		public void SelectionSort(int delayTime){
 			//getting the date and time when the selection sort starts
 			Calendar start = Calendar.getInstance();
 			//Using the selection sort to lines_lengths sort the array
@@ -85,10 +85,12 @@ public class SortShow extends JPanel {
 					int temp = lines_lengths[i];
 					lines_lengths[i] = lines_lengths[minIndex];
 					lines_lengths[minIndex] = temp;
+					paintComponent(this.getGraphics());
+					delay(delayTime);
 				}
 
-				paintComponent(this.getGraphics());
-				delay(10);
+				//paintComponent(this.getGraphics());
+				//delay(10);
 			}
 
 			//getting the date and time when the selection sort ends
@@ -112,7 +114,7 @@ public class SortShow extends JPanel {
 			return minIndex;
 		}
 
-	public void BubbleSort() {
+	public void BubbleSort(int delayTime) {
 		Calendar start = Calendar.getInstance();
 
 		int n = lines_lengths.length;
@@ -123,12 +125,14 @@ public class SortShow extends JPanel {
 					int temp = lines_lengths[j];
 					lines_lengths[j] = lines_lengths[j + 1];
 					lines_lengths[j + 1] = temp;
+					paintComponent(this.getGraphics());
+					delay(delayTime);
 				}
 			}
 
 			// Force repaint after each iteration for visualization
-			paintComponent(this.getGraphics());
-			delay(10);
+			//paintComponent(this.getGraphics());
+			//delay(10);
 		}
 
 		Calendar end = Calendar.getInstance();
@@ -137,7 +141,7 @@ public class SortShow extends JPanel {
 	}
 
 
-	public void InsertionSort() {
+	public void InsertionSort(int delayTime) {
 		// Getting the start time
 		Calendar start = Calendar.getInstance();
 
@@ -152,6 +156,8 @@ public class SortShow extends JPanel {
 			while (j >= 0 && lines_lengths[j] > key) {
 				lines_lengths[j + 1] = lines_lengths[j];
 				j--;
+				paintComponent(this.getGraphics());
+				delay(delayTime);
 
 				// Force repaint after each shift for visualization
 
@@ -159,8 +165,8 @@ public class SortShow extends JPanel {
 
 			// Place key in its correct position
 			lines_lengths[j + 1] = key;
-			paintComponent(this.getGraphics());
-			delay(10);
+			//paintComponent(this.getGraphics());
+			//delay(10);
 		}
 
 		// Getting the end time
@@ -173,7 +179,7 @@ public class SortShow extends JPanel {
 	///////////////////////////////////////////////////////////////////////////////////
 		
 		//recursive merge sort method
-		public void R_MergeSort(){
+		public void R_MergeSort(int delayTime){
 			//getting the date and time when the recursive merge sort starts
 			Calendar start = Calendar.getInstance();
 			//assigning the size for the tempArray below
@@ -211,7 +217,7 @@ public class SortShow extends JPanel {
 	//////////////////////////////////////////////////////////////////////////////////////////
 		
 		//iterative merge sort method
-		public void I_MergeSort()
+		public void I_MergeSort(int delayTime)
 		{
 		//getting the date and time when the iterative merge sort starts
 		Calendar start = Calendar.getInstance();
@@ -223,7 +229,7 @@ public class SortShow extends JPanel {
 		
 		for (int segmentLength = 1; segmentLength <= total_number_of_lines/2; segmentLength = 2*segmentLength)
 		{
-			beginLeftovers = I_MergeSegmentPairs(total_number_of_lines, segmentLength);
+			beginLeftovers = I_MergeSegmentPairs(total_number_of_lines, segmentLength, delayTime);
 			int endSegment = beginLeftovers + segmentLength - 1;
 			if (endSegment < total_number_of_lines - 1) 
 			{
@@ -243,7 +249,7 @@ public class SortShow extends JPanel {
 	} 
 
 	// Merges segments pairs (certain length) within an array 
-	public int I_MergeSegmentPairs(int l, int segmentLength)
+	public int I_MergeSegmentPairs(int l, int segmentLength, int delayTime)
 	{
 		//The length of the two merged segments 
 
@@ -264,7 +270,7 @@ public class SortShow extends JPanel {
 			//redrawing the lines_lengths
 			paintComponent(this.getGraphics());
 			//Causing a delay for 10ms
-			delay(10);
+			delay(delayTime);
 		}
 		// Returns index of last merged pair
 		return beginSegment1;
@@ -319,60 +325,60 @@ public class SortShow extends JPanel {
 
 	//////////////////////////////////////////////////////////////////////
 
-	public void shellSortCall(){
+	public void shellSortCall(int delayTime){
 		Calendar start = Calendar.getInstance();
 		int first = 0;
 		int last = total_number_of_lines - 1;
-		shellSort(lines_lengths, first, last);
+		shellSort(lines_lengths, first, last, delayTime);
 		Calendar end = Calendar.getInstance();
-		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
+		SortGUI.shellsortTime = end.getTime().getTime() - start.getTime().getTime();
 
 	}
 
-	private void incrementalInsSort (int [] array, int first, int last, int space){
+	private void incrementalInsSort (int [] array, int first, int last, int space, int delayTime){
 		int unsorted, index;
 		for (unsorted = first + space; unsorted <= last; unsorted = unsorted + space){
 			int firstUnsorted = array[unsorted];
 			for (index = unsorted - space; (index >= first) && (firstUnsorted < array[index]); index = index - space){
 				array[index + space] = array[index];
 				paintComponent(this.getGraphics());
-				delay(10);
+				delay(delayTime);
 			}
 			array[index + space] = firstUnsorted;
 		}
 	}
 
-	public void shellSort (int [] array, int first, int last){
+	public void shellSort (int [] array, int first, int last, int delayTime){
 		int n = last - first + 1;
 		for (int space = n/2; space > 0; space = space/2){
 			for (int begin = first; begin < first + space; begin++){
-				incrementalInsSort(array, begin, last, space);
+				incrementalInsSort(array, begin, last, space, delayTime);
 			}
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////
 
-	public void quickSortCall(){
+	public void quickSortCall(int delayTime){
 		Calendar start = Calendar.getInstance();
 		int first = 0;
 		int last = total_number_of_lines - 1;
-		quickSort(lines_lengths, first, last);
-		//paintComponent(this.getGraphics());
+		quickSort(lines_lengths, first, last, delayTime);
+		paintComponent(this.getGraphics());
 		Calendar end = Calendar.getInstance();
 		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
 	}
 
-	private void swap (int [] array, int i, int j) {
+	private void swap (int [] array, int i, int j, int delayTime) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
 		paintComponent(this.getGraphics());
-		delay(10);
+		delay(delayTime);
 	}
 
 	private
-		int partition (int [] a, int first, int last)
+		int partition (int [] a, int first, int last, int delayTime)
 	{
 		int pivot = a[last];
 		int currElem = first;
@@ -380,23 +386,23 @@ public class SortShow extends JPanel {
 		while(currElem < last){
 			if(a[currElem] <= pivot){
 				prevElem++;
-				swap(a, currElem, prevElem);
+				swap(a, currElem, prevElem, delayTime);
 			}
 			currElem++;
 		}
-		swap(a, prevElem+1, last);
+		swap(a, prevElem+1, last, delayTime);
 		return prevElem+1;
 
 	}
 
 	public
-		void quickSort(int [] a, int first, int last)
+		void quickSort(int [] a, int first, int last, int delayTime)
 	{
 		if(first < last)
 		{
-			int pivotIndex = partition (a, first, last);
-			quickSort(a, first, pivotIndex - 1);
-			quickSort(a, pivotIndex + 1, last);
+			int pivotIndex = partition (a, first, last, delayTime);
+			quickSort(a, first, pivotIndex - 1, delayTime);
+			quickSort(a, pivotIndex + 1, last, delayTime);
 		}
 	}
 
@@ -459,5 +465,5 @@ public class SortShow extends JPanel {
 
 
 		
-	}
+
 

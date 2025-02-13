@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 public class SortGUI {
 
 	// import javax.swing.JFrame;
+	public int delayTime = 0;
 
 	//a variable that holds the amount of time for the selection sort takes to execute
 	public static double selectionTime = 0.0;
@@ -37,10 +38,11 @@ public class SortGUI {
 	public boolean Bubble_Sort_Done  = false;
 	//Boolean variable that is made to keep track whether or not the insertion sort has already been used
 	public boolean Insertion_Sort_Done = false;
-
+	//Boolean variable that is made to keep track whether or not the shell sort has already been used
 	public boolean Shell_Sort_Done = false;
+	//Boolean variable that is made to keep track whether or not the quick sort has already been used
 	public boolean Quick_Sort_Done = false;
-	//Making a object from the class SortShow
+	//Making an object from the class SortShow
 	SortShow sortArea = new SortShow();
 	
 	//Default constructor for SortGUI
@@ -53,7 +55,7 @@ public class SortGUI {
 		//Setting a title to the GUI window
 		screen.setTitle("Assignment-1 by Group13");
 		//setting the size of the window 
-		screen.setSize(975+sortArea.total_number_of_lines, 450);
+		screen.setSize(1300+sortArea.total_number_of_lines, 750);
 		//the operation when the frame is closed
 		screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//is set to true to display the frame
@@ -71,12 +73,14 @@ public class SortGUI {
 		JRadioButton imerge = new JRadioButton("Merge Iterative");
 		//making a bubble sort button with a text "Bubble Sort" on it
 		JRadioButton bubble = new JRadioButton("Bubble Sort");
-		//making a bubble sort button with a text "Insertion Sort" on it
+		//making a insertion sort button with a text "Insertion Sort" on it
 		JRadioButton insertion = new JRadioButton("Insertion Sort");
+		//making a shell sort button with a text "Shell Sort" on it
 		JRadioButton shellsort = new JRadioButton("Shell Sort");
+		//making a quick sort button with a text "Quick Sort" on it
 		JRadioButton qsort = new JRadioButton("Quick Sort");
-		//making a reset button with a text "Selection" on it
-		JRadioButton reset = new JRadioButton("Reset");
+		//making a reset button with a text "Reset" on it
+		JButton reset = new JButton("Reset");
 		//A label that displays the time it took for the Selection sort took to execute 
 		JLabel selection_time_label = new JLabel("Selection Time");
 		JLabel selection_time_taken = new JLabel(""); 
@@ -86,21 +90,30 @@ public class SortGUI {
 		//A label that displays the time it took for the iterative merge sort took to execute
 		JLabel imerge_time_label = new JLabel("Merge-Ita Time");
 		JLabel imerge_time_taken = new JLabel("");
-
+		//A label that displays the time it took for the bubble sort took to execute
 		JLabel bubble_time_label = new JLabel("Bubble Time");
 		JLabel bubble_time_taken = new JLabel("");
-
+		//A label that displays the time it took for the insertion sort took to execute
 		JLabel insertion_time_label = new JLabel("Insertion Time");
 		JLabel insertion_time_taken = new JLabel("");
-
-		JLabel shellsort_time_label = new JLabel("Shell Sort-Time");
+		//A label that displays the time it took for the shell sort took to execute
+		JLabel shellsort_time_label = new JLabel("Shell-Sort Time");
 		JLabel shellsort_time_taken = new JLabel("");
-
+		//A label that displays the time it took for the quick sort took to execute
 		JLabel qsort_time_label = new JLabel("Quick-Sort Time");
 		JLabel qsort_time_taken = new JLabel("");
 
 		//the default constructor for the class MyScreen
 		public MyScreen() {
+			JTextField delay = new JTextField("0");
+			delay.setSize(new Dimension(6,50));
+			delay.setPreferredSize(new Dimension(3,50));
+			JPanel delayPanel = new JPanel(new BorderLayout(0,0));
+			delayPanel.add(delay, BorderLayout.NORTH);
+			delayPanel.setSize(new Dimension(3, 50));
+			delayPanel.setPreferredSize(new Dimension(3,50));
+			delayPanel.setBorder(new javax.swing.border.TitledBorder("Set Delay"));
+
 			// Panel where sorted lines_lengths will displayed
 			//The time displayed for selection sort will be the colour red
 			selection_time_taken.setForeground(Color.RED);
@@ -112,6 +125,9 @@ public class SortGUI {
 			bubble_time_taken.setForeground(Color.RED);
 			//The time displayed for insertion sort will be the colour red
 			insertion_time_taken.setForeground(Color.RED);
+			//The time displayed for shell sort will be the colour red
+			shellsort_time_taken.setForeground(Color.RED);
+			//The time displayed for quick sort will be the colour red
 			qsort_time_taken.setForeground(Color.RED);
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
@@ -123,7 +139,9 @@ public class SortGUI {
 			bubble.setForeground(Color.BLUE);
 			//The insertion sort button text will be the colour blue
 			insertion.setForeground(Color.BLUE);
+			//The shell sort button text will be the colour blue
 			shellsort.setForeground(Color.BLUE);
+			//The quick sort button text will be the colour blue
 			qsort.setForeground(Color.BLUE);
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
@@ -131,6 +149,7 @@ public class SortGUI {
 			scramble_button.setFont(new Font("Arial", Font.BOLD, 15));
 			//A Panel to hold the radio_button_selection and set the GridLayout
 			JPanel radio_button_selection_Panel = new JPanel(new GridLayout(4, 1, 3, 3));
+
 
 			//Adding the selection button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(selection);
@@ -142,7 +161,9 @@ public class SortGUI {
 			radio_button_selection_Panel.add(bubble);
 			//Adding the insertion sort button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(insertion);
+			//Adding the shell sort button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(shellsort);
+			//Adding the quick sort button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(qsort);
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
@@ -150,7 +171,7 @@ public class SortGUI {
 			radio_button_selection_Panel.setBorder(new javax.swing.border.TitledBorder("Sort Algorithms"));
 
 			//A Panel to hold the time_Panel and set the GridLayout
-			JPanel time_Panel = new JPanel(new GridLayout(6, 1, 3, 3));
+			JPanel time_Panel = new JPanel(new GridLayout(7, 2, 5, 5));
 			//Adding the selection_time_label to the time_Panel
 			time_Panel.add(selection_time_label);
 			//Adding the selection_time_taken to the time_Panel
@@ -171,10 +192,13 @@ public class SortGUI {
 			time_Panel.add(insertion_time_label);
 			//Adding the insertion_time_taken to the time_Panel
 			time_Panel.add(insertion_time_taken);
-
+			//Adding the shellsort_time_label to the time_Panel
 			time_Panel.add(shellsort_time_label);
+			//Adding the shellsort_time_taken to the time_Panel
 			time_Panel.add(shellsort_time_taken);
+			//Adding the qsort_time_label to the time_Panel
 			time_Panel.add(qsort_time_label);
+			//Adding the qsort_time_taken to the time_Panel
 			time_Panel.add(qsort_time_taken);
 
 			//A Panel to hold the buttons_area_Panel and set the GridLayout
@@ -182,6 +206,7 @@ public class SortGUI {
 			JPanel buttons_area_Panel = new JPanel(new GridLayout(5, 1, 5, 5));
 			//adding scramble_button to the buttons_area_Panel
 			buttons_area_Panel.add(scramble_button);
+			buttons_area_Panel.add(delayPanel);
 			//adding radio_button_selection_Panel to the buttons_area_Panel
 			buttons_area_Panel.add(radio_button_selection_Panel);
 			//adding time_Panel to the buttons_area_Panel
@@ -192,8 +217,7 @@ public class SortGUI {
 			//placing the sortArea object in the center of the window
 			add(sortArea, BorderLayout.CENTER);
 			//setting all booleans to false
-			Set_Available_Chooses(false, false, false, false, false, false);
-			Set_Available_Chooses(false, false, false, false, false);
+			Set_Available_Chooses(false, false, false, false, false, false, false, false);
 
 			//The following code is for creating a listener for each GUI element 
 
@@ -207,8 +231,7 @@ public class SortGUI {
 					//Since it has already been clicked, it will no longer be enabled
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
-					Set_Available_Chooses(true, true, true, true, true,  false );
-					Set_Available_Chooses(true, true, true, true,false);
+					Set_Available_Chooses(true, true, true, true, true, true, true, false );
 				}
 			});
 
@@ -216,13 +239,14 @@ public class SortGUI {
 			selection.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//Sorting the array in the selection sort method
-					sortArea.SelectionSort(); 
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.SelectionSort(delayTime);
 					//Selection sort has finished/been clicked
 					Selection_Done = true;
 					//The amount of time taken for selection sort took
 					selection_time_taken.setText(selectionTime / 1000 + " Seconds");
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, false, false, true);
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
 				}
 			});
 
@@ -230,13 +254,14 @@ public class SortGUI {
 			rmerge.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//Sorting the array in the recursive merge sort method
-					sortArea.R_MergeSort();
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.R_MergeSort(delayTime);
 					//The amount of time taken for recursive merge sort took
 					rmerge_time_taken.setText((rmergeTime / 1000) + " Seconds");
 					//recursive merge sort has finished/been clicked
 					Recersive_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, false, false, true);
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
 				}
 			});
 			
@@ -244,32 +269,42 @@ public class SortGUI {
 			imerge.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//Sorting the array in the iterative merge sort method
-					sortArea.I_MergeSort();
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.I_MergeSort(delayTime);
 					//The amount of time taken for iterative merge sort took
 					imerge_time_taken.setText((imergeTime / 1000) + " Seconds");
 					//iterative merge sort has finished/been clicked
 					Iterative_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, false, false, true);
-					Set_Available_Chooses(false, false, false, false,true);
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
 				}
 			});
 
 			shellsort.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					sortArea.shellSortCall();
+					//Calling shell sort
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.shellSortCall(delayTime);
+					//Display amount of time taken for shell sort
 					shellsort_time_taken.setText((shellsortTime / 1000) + " Seconds");
+					//Set to true to indicate completion of the sort
 					Shell_Sort_Done = true;
-					Set_Available_Chooses(false, false, false, false,true);
+					//Set all choice options to false besides reset
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
 				}
 			});
 
 			qsort.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					sortArea.quickSortCall();
+					//Calling quick sort
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.quickSortCall(delayTime);
+					//Display amount of time taken by quick sort
 					qsort_time_taken.setText((qsortTime / 1000) + " Seconds");
+					//Set to true to indicate completion of the sort
 					Quick_Sort_Done = true;
-					Set_Available_Chooses(false, false, false, false,true);
+					//Set all choice options to false besides reset
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
 				}
 			});
 
@@ -277,13 +312,14 @@ public class SortGUI {
 			bubble.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)	{
 					//Sorting the array in the bubble sort method
-					sortArea.BubbleSort();
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.BubbleSort(delayTime);
 					//The amount of time taken for iterative merge sort took
 					bubble_time_taken.setText((bubbleTime / 1000) + " Seconds");
 					//Bubble sort has finished/been clicked
 					Bubble_Sort_Done = true;
 					//setting all booleans false except for
-					Set_Available_Chooses(false, false, false, false, false,  true);
+					Set_Available_Chooses(false, false, false, false, false, false, false,  true);
 				}
 			});
 
@@ -291,13 +327,15 @@ public class SortGUI {
 			insertion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)	{
 					//Sorting the array in the bubble sort method
-					sortArea.InsertionSort();
+					delayTime = Integer.parseInt(delay.getText());
+					sortArea.InsertionSort(delayTime);
 					//The amount of time taken for iterative merge sort took
 					insertion_time_taken.setText((insertionTime / 1000) + " Seconds");
 					//Bubble sort has finished/been clicked
 					Insertion_Sort_Done = true;
 					//setting all booleans false except for
-					Set_Available_Chooses(false, false, false, false, false, true);
+					Set_Available_Chooses(false, false, false, false, false, false, false,true);
+
 				}
 			});
 			//Creating an action listener for reset button
@@ -311,7 +349,7 @@ public class SortGUI {
 					//There are many different combinations of what could be clicked 
 					//The following code below covers all possibilities
 					//FOr the following use the same comments as above 
-					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
+					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done && Shell_Sort_Done && Quick_Sort_Done) {
 						//
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
@@ -321,58 +359,24 @@ public class SortGUI {
 						Selection_Done = false;
 						Bubble_Sort_Done = false;
 						Insertion_Sort_Done = false;
-						Set_Available_Chooses(false, false, false, false, false, false);
+						Set_Available_Chooses(false, false, false, false, false, false, false, false);
 						selection_time_taken.setText("");
 						rmerge_time_taken.setText("");
 						imerge_time_taken.setText("");
 						bubble_time_taken.setText("");
 						insertion_time_taken.setText("");
-
-					} else if (Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(true, false, false, false, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, false, false, false, true, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, false, false, true, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, false, true, false, false, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, true, false, false, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, false, true, false, true, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(false, true, false, false, false, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done && Bubble_Sort_Done) {
-						Set_Available_Chooses(false, true, false, true, false, false);
-
-					} else if (Bubble_Sort_Done && Insertion_Sort_Done) {
-						Set_Available_Chooses(true, true, true, false, false, false);
-
-					} else if (Selection_Done) {
-						Set_Available_Chooses(false, true, true, true, true, false);
-
-					} else if (Recersive_Merge_Done) {
-						Set_Available_Chooses(true, false, true, true, true, false);
-
-					} else if (Iterative_Merge_Done) {
-						Set_Available_Chooses(true, true, false, true, true, false);
-
-					} else if (Bubble_Sort_Done) {
-						Set_Available_Chooses(true, true, true, false, true, false);
-
-					} else if (Insertion_Sort_Done) {
-						Set_Available_Chooses(true, true, true, true, false, false);
+						shellsort_time_taken.setText("");
+						qsort_time_taken.setText("");
 
 					} else {
-						// If no sorting algorithms have been used, enable all buttons
-						Set_Available_Chooses(true, true, true, true, true, false);
+						boolean oppSel = !Selection_Done;
+						boolean oppRMerge = !Recersive_Merge_Done;
+						boolean oppIMerge = !Iterative_Merge_Done;
+						boolean oppBubble = !Bubble_Sort_Done;
+						boolean oppInsertion = !Insertion_Sort_Done;
+						boolean oppShell = !Shell_Sort_Done;
+						boolean oppQuick = !Quick_Sort_Done;
+						Set_Available_Chooses(oppSel, oppRMerge, oppIMerge, oppBubble, oppInsertion, oppShell, oppQuick, false);
 					}
 				}
 			});
@@ -380,14 +384,17 @@ public class SortGUI {
 		}
 
 		//A method that sets if the button are enabled or disabled
-		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state, boolean bubble_state, boolean insertion_state,
+		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state, boolean bubble_state, boolean insertion_state, boolean shellsort_state, boolean quicksort_state,
 				boolean reset_state) {
 			this.selection.setEnabled(selection_state);
 			this.rmerge.setEnabled(rmerge_state);
 			this.imerge.setEnabled(imerge_state);
 			this.bubble.setEnabled(bubble_state);
 			this.insertion.setEnabled(insertion_state);
+			this.shellsort.setEnabled(shellsort_state);
+			this.qsort.setEnabled(quicksort_state);
 			this.reset.setEnabled(reset_state);
+			//this.reset.repaint();
 		}
 	}
 
@@ -403,6 +410,6 @@ public class SortGUI {
 
 
 
-}
+
 
 
