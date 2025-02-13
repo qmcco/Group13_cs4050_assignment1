@@ -203,7 +203,7 @@ public class SortGUI {
 					//Since it has already been clicked, it will no longer be enabled
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
-					Set_Available_Chooses(false, false, false, false, false, false, true);
+					Set_Available_Chooses(true, true, true, true, true, true, false);
 				}
 			});
 

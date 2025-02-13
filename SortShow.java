@@ -280,10 +280,6 @@ public class SortShow extends JPanel {
 		for (int i = 1; max/i > 0; i *= 10) {
 			BucketSort(array, i);
 
-			//Causing a delay for 10ms
-			delay(10);
-			paintComponent(this.getGraphics());
-
 		}
 	}
 	// Helper function for getting largest value in the array
@@ -317,6 +313,9 @@ public class SortShow extends JPanel {
 			for (int num : bucket) {
 				array[index++] = num;
 				//delay(10);
+				//Causing a delay for 10ms
+				delay(10);
+				paintComponent(this.getGraphics());
 			}
 		}
 	}
