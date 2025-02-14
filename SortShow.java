@@ -88,12 +88,12 @@ public class SortShow extends JPanel {
 					int temp = lines_lengths[i];
 					lines_lengths[i] = lines_lengths[minIndex];
 					lines_lengths[minIndex] = temp;
-					paintComponent(this.getGraphics());
-					delay(delayTime);
+					//paintComponent(this.getGraphics());
+					//delay(delayTime);
 				}
 
-				//paintComponent(this.getGraphics());
-				//delay(10);
+				paintComponent(this.getGraphics());
+				delay(delayTime);
 			}
 
 			//getting the date and time when the selection sort ends
@@ -128,14 +128,14 @@ public class SortShow extends JPanel {
 					int temp = lines_lengths[j];
 					lines_lengths[j] = lines_lengths[j + 1];
 					lines_lengths[j + 1] = temp;
-					paintComponent(this.getGraphics());
-					delay(delayTime);
+//					paintComponent(this.getGraphics());
+//					delay(delayTime);
 				}
 			}
 
 			// Force repaint after each iteration for visualization
-			//paintComponent(this.getGraphics());
-			//delay(10);
+			paintComponent(this.getGraphics());
+			delay(delayTime);
 		}
 
 		Calendar end = Calendar.getInstance();
@@ -159,8 +159,8 @@ public class SortShow extends JPanel {
 			while (j >= 0 && lines_lengths[j] > key) {
 				lines_lengths[j + 1] = lines_lengths[j];
 				j--;
-				paintComponent(this.getGraphics());
-				delay(delayTime);
+//				paintComponent(this.getGraphics());
+//				delay(delayTime);
 
 				// Force repaint after each shift for visualization
 
@@ -168,8 +168,8 @@ public class SortShow extends JPanel {
 
 			// Place key in its correct position
 			lines_lengths[j + 1] = key;
-			//paintComponent(this.getGraphics());
-			//delay(10);
+			paintComponent(this.getGraphics());
+			delay(delayTime);
 		}
 
 		// Getting the end time
@@ -284,12 +284,7 @@ public class SortShow extends JPanel {
 		int max = getMax(array);
 		// Start at the LSD and iterate by digit until reaching max digits
 		for (int i = 1; max/i > 0; i *= 10) {
-			BucketSort(array, i);
-
-			//Causing a delay for int delayTime value
-			delay(delayTime);
-			paintComponent(this.getGraphics());
-
+			BucketSort(array, i, delayTime);
 		}
 	}
 	// Helper function for getting largest value in the array
@@ -303,7 +298,7 @@ public class SortShow extends JPanel {
 		return max;
 	}
 	// Bucket sort Method
-	private void BucketSort(int[] array, int digit) {
+	private void BucketSort(int[] array, int digit, int delayTime) {
 		// Make buckets for each digit 0-9
 		ArrayList<Integer>[] buckets = new ArrayList[10];
 		// Make each bucket into an ArrayList for storing the sorted values
@@ -314,7 +309,6 @@ public class SortShow extends JPanel {
 		for (int num : array) {
 			int place = (num/ digit) % 10;
 			buckets[place].add(num);
-			//delay(10);
 		}
 		// Remake the passed array with the results of the current sorting
 		// Takes the numbers in order from the buckets and puts into the array
@@ -322,7 +316,9 @@ public class SortShow extends JPanel {
 		for (List<Integer> bucket : buckets) {
 			for (int num : bucket) {
 				array[index++] = num;
-				//delay(10);
+				//Causing a delay for int delayTime value
+				delay(delayTime);
+				paintComponent(this.getGraphics());
 			}
 		}
 	}
@@ -491,8 +487,7 @@ public class SortShow extends JPanel {
 		delay(delayTime);
 	}
 
-	private
-		int partition (int [] a, int first, int last, int delayTime)
+	private int partition (int [] a, int first, int last, int delayTime)
 	{
 		int pivot = a[last];
 		int currElem = first;
@@ -509,8 +504,7 @@ public class SortShow extends JPanel {
 
 	}
 
-	public
-		void quickSort(int [] a, int first, int last, int delayTime)
+	public void quickSort(int [] a, int first, int last, int delayTime)
 	{
 		if(first < last)
 		{
