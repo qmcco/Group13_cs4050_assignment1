@@ -251,6 +251,15 @@ public class SortGUI {
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
 					Set_Available_Chooses(true, true, true, true, true, true, true, true,false );
+					selection.setSelected(false);
+					insertion.setSelected(false);
+					rmerge.setSelected(false);
+					imerge.setSelected(false);
+					bubble.setSelected(false);
+					qsort.setSelected(false);
+					radix.setSelected(false);
+					shellsort.setSelected(false);
+					reset.setSelected(false);
 				}
 			});
 
