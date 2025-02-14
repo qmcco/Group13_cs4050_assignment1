@@ -434,21 +434,31 @@ public class SortShow extends JPanel {
 	}
 
 	//////////////////////////////////////////////////////////////////////
-
+	//Method to initiate the recursive Shell Sort
 	public void shellSortCall(int delayTime){
+		//Record time at start of sort
 		Calendar start = Calendar.getInstance();
+		//First element index in the array
 		int first = 0;
+		//Last element index in the array
 		int last = total_number_of_lines - 1;
+		//Initiate recursive Shell Sort
 		shellSort(lines_lengths, first, last, delayTime);
+		//Record time at end of sort
 		Calendar end = Calendar.getInstance();
+		//Calculate total time, set GUI Shell Sort time
 		SortGUI.shellsortTime = end.getTime().getTime() - start.getTime().getTime();
 
 	}
-
+	//Helper incremental insertion sort method, compares elements of a subarray and sorts them, identifying the elements by the passed first index, known to be the first
+	//element of the subarray, then spacing out by the space value
 	private void incrementalInsSort (int [] array, int first, int last, int space, int delayTime){
 		int unsorted, index;
+		//unsorted set equal to the next element of the subarray, while unsorted does not exceed the size of the array, increment to the next element of the subarray
 		for (unsorted = first + space; unsorted <= last; unsorted = unsorted + space){
+			//store value at the location of unsorted in the array
 			int firstUnsorted = array[unsorted];
+			//index set equal to the first element of the subarray
 			for (index = unsorted - space; (index >= first) && (firstUnsorted < array[index]); index = index - space){
 				array[index + space] = array[index];
 				paintComponent(this.getGraphics());
