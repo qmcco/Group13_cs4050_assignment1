@@ -128,14 +128,14 @@ public class SortShow extends JPanel {
 					int temp = lines_lengths[j];
 					lines_lengths[j] = lines_lengths[j + 1];
 					lines_lengths[j + 1] = temp;
-//					paintComponent(this.getGraphics());
-//					delay(delayTime);
+					// Force repaint after each iteration for visualization
+					paintComponent(this.getGraphics());
+					delay(delayTime);
 				}
 			}
 
-			// Force repaint after each iteration for visualization
-			paintComponent(this.getGraphics());
-			delay(delayTime);
+			//paintComponent(this.getGraphics());
+			//delay(delayTime);
 		}
 
 		Calendar end = Calendar.getInstance();
@@ -434,7 +434,7 @@ public class SortShow extends JPanel {
 	}
 
 	//////////////////////////////////////////////////////////////////////
-	//Method to initiate the recursive Shell Sort
+	//Method to initiate the Shell Sort
 	public void shellSortCall(int delayTime){
 		//Record time at start of sort
 		Calendar start = Calendar.getInstance();
@@ -442,7 +442,7 @@ public class SortShow extends JPanel {
 		int first = 0;
 		//Last element index in the array
 		int last = total_number_of_lines - 1;
-		//Initiate recursive Shell Sort
+		//Initiate Shell Sort
 		shellSort(lines_lengths, first, last, delayTime);
 		//Record time at end of sort
 		Calendar end = Calendar.getInstance();
@@ -460,17 +460,23 @@ public class SortShow extends JPanel {
 			int firstUnsorted = array[unsorted];
 			//index set equal to the first element of the subarray
 			for (index = unsorted - space; (index >= first) && (firstUnsorted < array[index]); index = index - space){
+				//next element of the subarray set to equal the current index element
 				array[index + space] = array[index];
+				//Update display of visualized sort
 				paintComponent(this.getGraphics());
 				delay(delayTime);
 			}
+			//Second element in subarray set to equal the value of the first unsorted value in the subarray
 			array[index + space] = firstUnsorted;
 		}
 	}
-
+	//Main shell sort function, divides the array into smaller and smaller subarrays, then sorts each subarray using insertion sort
 	public void shellSort (int [] array, int first, int last, int delayTime){
+		//n is the difference between the first and last elements of shell sort
 		int n = last - first + 1;
+		//space is the space between each element in the subarray, this value gets smaller and smaller as the subarrays are sorted
 		for (int space = n/2; space > 0; space = space/2){
+			//sort each subarray within the current margins
 			for (int begin = first; begin < first + space; begin++){
 				incrementalInsSort(array, begin, last, space, delayTime);
 			}
@@ -478,30 +484,40 @@ public class SortShow extends JPanel {
 	}
 
 	//////////////////////////////////////////////////////////////////////
-
+	//Method to initiate recursive Quick Sort
 	public void quickSortCall(int delayTime){
+		//Record current time before execution of sort
 		Calendar start = Calendar.getInstance();
 		int first = 0;
 		int last = total_number_of_lines - 1;
+		//Initiate Quick Sort
 		quickSort(lines_lengths, first, last, delayTime);
+		//Display final result of Quick Sort
 		paintComponent(this.getGraphics());
+		//Record time after end of execution
 		Calendar end = Calendar.getInstance();
+		//Calculate time elapsed and display
 		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
 	}
-
+	//Swap method to swap two array elements
 	private void swap (int [] array, int i, int j, int delayTime) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
+		//Update visual display each time a swap occurs
 		paintComponent(this.getGraphics());
 		delay(delayTime);
 	}
-
+	//partition the array to find the ideal pivot for the current array, 3 way partitioning
 	private int partition (int [] a, int first, int last, int delayTime)
 	{
+		//Set pivot to be the last element of the array
 		int pivot = a[last];
+		//Current observed element
 		int currElem = first;
+		//Previous element
 		int prevElem = (first-1);
+		//if the current element is found to be less than the pivot, swap the current and previous elements, otherwise increment the current element
 		while(currElem < last){
 			if(a[currElem] <= pivot){
 				prevElem++;
@@ -509,17 +525,22 @@ public class SortShow extends JPanel {
 			}
 			currElem++;
 		}
+		//swap the element at array position prevElem+1 with the last element, then return the prevElem+1 as the pivot
 		swap(a, prevElem+1, last, delayTime);
 		return prevElem+1;
 
 	}
-
+	//Recursive quicksort method
 	public void quickSort(int [] a, int first, int last, int delayTime)
 	{
+		//as long as the first is less than the last element
 		if(first < last)
 		{
+			//find pivot using partition method
 			int pivotIndex = partition (a, first, last, delayTime);
+			//Sort the first half of the array
 			quickSort(a, first, pivotIndex - 1, delayTime);
+			//Sort the last half
 			quickSort(a, pivotIndex + 1, last, delayTime);
 		}
 	}

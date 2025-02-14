@@ -114,6 +114,7 @@ public class SortGUI {
 
 		//the default constructor for the class MyScreen
 		public MyScreen() {
+			//Make a text field where the user can enter the delay which they would like to use manually
 			JTextField delay = new JTextField("0");
 			delay.setSize(new Dimension(6,50));
 			delay.setPreferredSize(new Dimension(3,50));
